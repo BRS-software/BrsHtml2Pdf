@@ -27,7 +27,7 @@ $converter->setHtmlDocument('
 ');
 
 // generate the pdf file
-$pdf = $conv->getPdfFile();
+$pdf = $converter->getPdfFile();
 
 // send to client for download
 $pdf->sendToBrowser('file.pdf');
