@@ -30,7 +30,7 @@ interface AdapterInterface
     public function convertFile(FileInterface $file);
 
     /**
-     * @param FileInterface $file html file to convert
+     * @param string $url
      * @return Brs\Stdlib\File\Type\Pdf
      * @throws Brs\Html2Pdf\Exception\RuntimeException when there is a problem with conversion
      */
