@@ -12,7 +12,8 @@
     ],
     "require": {
         "php": ">=5.4",
-        "brs-software/brs-stdlib": "dev-master"
+        "brs-software/brs-stdlib": "dev-master",
+        "symfony/process"
     },
     "require-dev": {
         "phpunit/PHPUnit": "3.7.*"
