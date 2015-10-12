@@ -77,7 +77,7 @@ class Wkhtmltopdf implements AdapterInterface
 
     public function convertFile(FileInterface $inputFile)
     {
-        // file must by saved
+        // file must be saved
         $inputFile->save();
 
         // wkhtmtopdf doesn't handle local files with non-typical extensions
