@@ -23,7 +23,7 @@ class Html2Pdf
     protected $adapter;
     protected $htmlDocument;
     protected $htmlFile;
-    protected $outputFile;
+    protected $url;
 
     public function __construct(AdapterInterface $adapter)
     {
@@ -70,8 +70,27 @@ class Html2Pdf
         return $this->htmlFile;
     }
 
+    public function setUrl($url)
+    {
+        $this->url = $url;
+        return $this;
+    }
+
+    public function getUrl()
+    {
+        if (null === $this->url) {
+            throw new Exception\RuntimeException('Url not set');
+        }
+        return $this->url;
+    }
+
     public function getPdfFile()
     {
-        return $this->adapter->convert($this->getHtmlFile());
+        if ($this->url) {
+            // dbgd($this->url);
+            return $this->adapter->convertUrl($this->getUrl());
+        } else {
+            return $this->adapter->convertFile($this->getHtmlFile());
+        }
     }
 }

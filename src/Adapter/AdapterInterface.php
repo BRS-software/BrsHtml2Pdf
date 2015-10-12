@@ -18,9 +18,21 @@ use Brs\Stdlib\File\FileInterface;
 interface AdapterInterface
 {
     /**
+     * @throws Brs\Html2Pdf\Exception\RuntimeException when environment is not pass the test
+     */
+    public static function testEnv();
+
+    /**
      * @param FileInterface $file html file to convert
      * @return Brs\Stdlib\File\Type\Pdf
-     * @throws Exception\RuntimeException when there is a problem with conversion
+     * @throws Brs\Html2Pdf\Exception\RuntimeException when there is a problem with conversion
      */
-    public function convert(FileInterface $file);
+    public function convertFile(FileInterface $file);
+
+    /**
+     * @param FileInterface $file html file to convert
+     * @return Brs\Stdlib\File\Type\Pdf
+     * @throws Brs\Html2Pdf\Exception\RuntimeException when there is a problem with conversion
+     */
+    public function convertUrl($url);
 }
