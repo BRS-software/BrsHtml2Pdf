@@ -23,5 +23,6 @@
             "Brs\\Html2Pdf\\": "src/",
             "Brs\\Html2PdfTest\\": "tests/"
         }
-    }
+    },
+    "minimum-stability": "dev"
 }
