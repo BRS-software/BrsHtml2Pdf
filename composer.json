@@ -1,18 +1,15 @@
 {
-    "name": "brs-software/brs-html2pdf",
-    "homepage": "https://github.com/brssoftware/BrsHtml2Pdf",
+    "name": "brs-software/html2pdf",
+    "homepage": "https://github.com/brssoftware/Html2Pdf",
     "description": "Common interface for converting HTML documents to PDF using adapters",
     "type": "library",
     "license": "The MIT License",
     "keywords": [
         "brs", "html", "pdf", "wkhtmltopdf"
     ],
-    "repositories": [
-        {"type": "vcs", "url": "https://github.com/BRS-software/BrsStdlib.git"}
-    ],
     "require": {
         "php": ">=5.4",
-        "brs-software/brs-stdlib": "1.*",
+        "brs-software/stdlib": "1.*",
         "symfony/process": "2.*"
     },
     "require-dev": {
