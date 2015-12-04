@@ -48,7 +48,7 @@ class Wkhtmltopdf implements AdapterInterface
         $this->xvfbCmd = new ProcessBuilder();
         $this->xvfbCmd
             ->setPrefix('/usr/bin/xvfb-run')
-            ->setArguments(['--server-args=-screen 0, 1024x768x24'])
+            ->setArguments(['-a', '--server-args=-screen 0, 1024x768x24'])
         ;
 
         $this->wkhtmltopdfCmd = new ProcessBuilder();
