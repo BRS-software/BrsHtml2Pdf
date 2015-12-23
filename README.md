@@ -3,7 +3,7 @@ Common interface for converting HTML documents to PDF using adapters.
 
 ## Available adapters
 
- * Wkhtmltopdf (required programs installed on the server: xvfb, wkhtmltopdf)
+ * Wkhtmltopdf - for debian and ubuntu install: http://download.gna.org/wkhtmltopdf/0.12/0.12.2.1/wkhtmltox-0.12.2.1_linux-precise-amd64.deb. Version available in official packages is obsolete and require xvfb-run.
 
 ## Examples
 
@@ -19,8 +19,9 @@ Wkhtmltopdf::testEnv();
 $adapter = new Wkhtmltopdf;
 
 // you can change path to binary on your server
-$adapter->getXvfbCmd()->setPrefix('/special/path/to/xvfb-run');
-$adapter->getWkhtmltopdfCmd()->setPrefix('/special/path/to/whhtmltopdf');
+$adapter->getWkhtmltopdfCmd()
+    ->setPrefix('/special/path/to/whhtmltopdf')
+;
 
 // add wkhtmltopdf parameter
 $adapter->getWkhtmltopdfCmd()
@@ -28,7 +29,7 @@ $adapter->getWkhtmltopdfCmd()
     ->add('--lowquality')
 ;
 
-// set xvfb binary path, reset arguments and set own
+// if you must to use xvfb-run you can configure it
 $adapter->getXvfbCmd()
     ->setPrefix('/special/path/to/xvfb-run')
     ->setArguments(['--server-args=-screen 0, 800x600x24'])
