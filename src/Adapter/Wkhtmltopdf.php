@@ -50,7 +50,7 @@ class Wkhtmltopdf implements AdapterInterface
     {
         $this->wkhtmltopdfCmd = new ProcessBuilder();
         $this->wkhtmltopdfCmd
-            ->setPrefix('/usr/bin/wkhtmltopdf')
+            ->setPrefix('/usr/local/bin/wkhtmltopdf')
         ;
     }
 
