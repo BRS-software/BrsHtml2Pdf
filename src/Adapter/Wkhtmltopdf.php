@@ -24,11 +24,12 @@ use Symfony\Component\Process\Exception\ProcessFailedException;
  */
 class Wkhtmltopdf implements AdapterInterface
 {
+    private $xvfbCmdEnabled = false;
     private $xvfbCmd;
     private $wkhtmltopdfCmd;
     private $lastProcess;
 
-    public static function testEnv()
+    public static function testEnv($checkXvfb = false)
     {
         $test = function ($bin) {
             try {
@@ -39,22 +40,30 @@ class Wkhtmltopdf implements AdapterInterface
                 throw new Exception\RuntimeException($bin . ' command not found on this server - install it before using this adapter', 0, $e);
             }
         };
-        $test('wkhtmltopdf');
+        if ($checkXvfb) {
+            $test('wkhtmltopdf');
+        }
         $test('xvfb-run');
     }
 
     public function __construct()
     {
-        $this->xvfbCmd = new ProcessBuilder();
-        $this->xvfbCmd
-            ->setPrefix('/usr/bin/xvfb-run')
-            ->setArguments(['-a', '--server-args=-screen 0, 1024x768x24'])
-        ;
-
         $this->wkhtmltopdfCmd = new ProcessBuilder();
         $this->wkhtmltopdfCmd
             ->setPrefix('/usr/bin/wkhtmltopdf')
         ;
+    }
+
+    public function enableXvfb()
+    {
+        $this->xvfbCmdEnabled = true;
+        return $this;
+    }
+
+    public function disableXvfb()
+    {
+        $this->xvfbCmdEnabled = false;
+        return $this;
     }
 
     public function getWkhtmltopdfCmd()
@@ -64,6 +73,13 @@ class Wkhtmltopdf implements AdapterInterface
 
     public function getXvfbCmd()
     {
+        if (null === $this->xvfbCmd) {
+            $this->xvfbCmd = new ProcessBuilder();
+            $this->xvfbCmd
+                ->setPrefix('/usr/bin/xvfb-run')
+                ->setArguments(['-a', '--server-args=-screen 0, 1024x768x24'])
+            ;
+        }
         return $this->xvfbCmd;
     }
 
@@ -104,7 +120,11 @@ class Wkhtmltopdf implements AdapterInterface
             ->add($outputFile->getPath())
         ;
 
-        $this->lastProcess = new Process($this->xvfbCmd->getProcess()->getCommandLine(). ' ' . $this->wkhtmltopdfCmd->getProcess()->getCommandLine());
+        $cmd = $this->wkhtmltopdfCmd->getProcess()->getCommandLine();
+        if ($this->xvfbCmdEnabled) {
+            $cmd = $this->getXvfbCmd()->getProcess()->getCommandLine() . ' ' . $cmd;
+        }
+        $this->lastProcess = new Process($cmd);
 
         try {
             $this->lastProcess->mustRun();
